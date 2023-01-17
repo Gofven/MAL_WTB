@@ -38,7 +38,7 @@ async def wtd(ctx):
 
         else:
             catch_up_msg = f"{user_one if wt_one > wt_two else user_two} lead is growing at " \
-                           f"{(math.floor(abs(delta_one - delta_two) * 1440))} min/day, " \
+                           f"{abs(delta_one - delta_two) * 24:.1f} hours/day, " \
                            f"{user_one if not wt_one > wt_two else user_two} is falling behind!"
 
     embed = discord.Embed(title="MAL Watch-Time Battler", description=catch_up_msg)
@@ -46,10 +46,10 @@ async def wtd(ctx):
                     value=f"{user_one}: {wt_one} Days\n{user_two}: {wt_two} Days",
                     inline=True)
     embed.add_field(name="Difference",
-                    value=f"{difference:.2f} Days\n~{(difference * 1440 / 24):.0f} Episodes (24 min)",
+                    value=f"{difference:.1f} Days\n~{(difference * 1440 / 24):.0f} Episodes (24 min)",
                     inline=True)
     embed.add_field(name="Net Gain",
-                    value=f"Mark: {delta_one * 1440} min/day\nGofven: {delta_two * 1440} min/day")
+                    value=f"Mark: {delta_two * 24:.1f} hours/day\nGofven: {delta_one * 24:.1f} hours/day")
 
     return await ctx.send(embed=embed)
 
