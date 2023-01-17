@@ -5,7 +5,7 @@ from os import getenv
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from scrapers import get_mal_user_watchtime, mal_watchtime_average
+from scrapers import get_mal_user_watchtime, mal_watchtime_average, xkcd_comic
 
 load_dotenv()
 
@@ -42,6 +42,7 @@ async def wtd(ctx):
                            f"{user_one if not wt_one > wt_two else user_two} is falling behind!"
 
     embed = discord.Embed(title="MAL Watch-Time Battler", description=catch_up_msg)
+    embed.set_image(url=await xkcd_comic())
     embed.add_field(name="Current Standing",
                     value=f"{user_one}: {wt_one} Days\n{user_two}: {wt_two} Days",
                     inline=True)

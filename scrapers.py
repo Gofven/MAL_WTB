@@ -1,3 +1,5 @@
+from typing import Union
+
 import aiohttp
 import re
 import sqlite3
@@ -20,6 +22,23 @@ async def get_mal_user_watchtime(*, username: str, is_anime: bool = True, store_
         save_user_watchtime(username=username, days=days, is_anime=is_anime)
 
     return days
+
+
+async def xkcd_comic() -> Union[str, None]:
+    url = f'https://c.xkcd.com/random/comic/'
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            data = await resp.text()
+
+    comic = re.findall(r'<div id="comic">\n<img src="\/\/(.*)" title=', data)
+
+    if len(comic) > 0:
+        comic = f"https://{comic[0]}"
+        return comic
+
+    else:
+        return None
 
 
 def mal_watchtime_average(username: str, days: int, is_anime: int = True):
