@@ -1,11 +1,19 @@
 import datetime
 import math
-from os import getenv
+from os import getenv, path
 
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 from scrapers import get_mal_user_watchtime, mal_watchtime_average, xkcd_comic
+
+
+if not path.exists(".env"):
+    if not path.exists(".env.example"):
+        raise Exception("Missing .env file")
+
+    else:
+        raise Exception("Missing .env file, did you follow the instructions in .env.example?")
 
 load_dotenv()
 
