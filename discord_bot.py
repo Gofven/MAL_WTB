@@ -50,7 +50,7 @@ async def wtd(ctx):
                     value=f"{difference:.1f} Days\n~{(difference * 1440 / 24):.0f} Episodes (24 min)",
                     inline=True)
     embed.add_field(name="Net Gain",
-                    value=f"Mark: {delta_two * 24:.1f} hours/day\nGofven: {delta_one * 24:.1f} hours/day")
+                    value=f"{user_one}: {delta_one * 24:.1f} hours/day\n{user_two}: {delta_two * 24:.1f} hours/day")
 
     return await ctx.send(embed=embed)
 
