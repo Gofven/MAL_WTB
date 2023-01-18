@@ -1,5 +1,6 @@
 import datetime
 import math
+import os
 from os import getenv, path
 
 import discord
@@ -7,16 +8,22 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from scrapers import get_mal_user_watchtime, mal_watchtime_average, xkcd_comic
 
+#  Environment variable setup
+load_dotenv()
+required_env = ['DISCORD_TOKEN', 'WTB_ONE', 'WTB_TWO']
 
-if not path.exists(".env"):
+if not path.exists(".env") and not any([getenv(x, None) for x in required_env]):
     if not path.exists(".env.example"):
         raise Exception("Missing .env file")
 
     else:
         raise Exception("Missing .env file, did you follow the instructions in .env.example?")
 
-load_dotenv()
+for var in required_env:
+    if not getenv(var, None):
+        raise Exception(f"Environment variable {var} is missing data")
 
+# Bot setup
 intents = discord.Intents.default()
 intents.message_content = True
 
